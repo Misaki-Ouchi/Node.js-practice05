@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧ページ</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>商品一覧</h1>
+        <!-- ソートのセレクトボックス -->
+        <select name="" id="">
+            <option value="商品価格高い順">商品価格高い順</option>
+            <option value="商品価格低い順">商品価格低い順</option>
+            <option value="商品名50音">商品名50音</option>
+            <option value="レビューの評価順">レビューの評価順</option>
+            <option value="レビューの多い順">レビューの多い順</option>
+        </select>
+        <div id="items">
+            <% goods.forEach( item => { %>
+            <div class="item">
+                <!-- 商品画像 -->
+                <img class="itemImg" src="/img/item<%= item.id %>.jpg" alt="<%= item.name %>">
+                <!-- 商品名 -->
+                <p><%= item.name %></p>
+                <!-- 商品価格 -->
+                <p class="itemPrice"><%= item.price.toLocaleString() %>円</p>
+                <!-- レビューの平均値(レビュー数) -->
+                <p class="reviewAve">
+                    <span>レビュー平均：<img class="reviewStar" src="/img/re.svg" alt="星"></span>
+                    <small>(レビュー数)</small>
+                </p>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+    <script>
+        
+
+    </script>
+</body>
+</html>
