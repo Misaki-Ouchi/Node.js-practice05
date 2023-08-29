@@ -38,18 +38,9 @@ app.get("/", (req, res) => {
   const goodsPriceAsc = "SELECT * from goods ORDER BY price ASC;";
   // 商品名50音
   const goodsName = "SELECT * from goods ORDER BY name;";
-  // アイテムごとのレビュー評価配列 [[4, 3, 4...], [5, 4, 5...], ...]
-  const revPerItem = [];
-  let len = goods.length;
-  for (let i = 0; i < len; i++) {
-    let rev = `SELECT * from reviews WHERE ${i} = itemId;`;
-    revPerItem.push(rev)
-    // エラーになる
-  }
-
 
   con.query(
-    goods + reviews + goodsPriceDesc + goodsPriceAsc + goodsName + revPerItem ,
+    goods + reviews + goodsPriceDesc + goodsPriceAsc + goodsName,
     function (err, results, fields) {
       if (err) throw err;
       res.render("index", {
@@ -57,8 +48,7 @@ app.get("/", (req, res) => {
         reviews: results[1],
         goodsPriceDesc: results[2],
         goodsPriceAsc: results[3],
-        goodsName: results[4],
-        revPerItem: results[5],
+        goodsName: results[4]
       });
     }
   );
