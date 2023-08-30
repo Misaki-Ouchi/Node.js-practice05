@@ -87,9 +87,6 @@
                     `)
                 })
             }
-            window.addEventListener('load', sortFunc)
-            window.addEventListener('load', getReview)
-            sortSelect.addEventListener('change', sortFunc)
 
             // ソート機能
             // 並び替えセレクト時
@@ -124,6 +121,10 @@
                     goods[i].revTotal = reviewTotal[i].innerHTML
                 }
             }
+            
+            window.addEventListener('load', sortFunc)
+            window.addEventListener('load', getReview)
+            sortSelect.addEventListener('change', sortFunc)
         </script>
     </body>
 </html>

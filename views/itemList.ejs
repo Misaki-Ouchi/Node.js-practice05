@@ -34,69 +34,64 @@
             // データの取得
             const goodsItem = JSON.parse('<%= JSON.stringify(goodsItem) %>'.replace(/&#34;/g, '"'))
             const reviews = JSON.parse('<%= JSON.stringify(reviews) %>'.replace(/&#34;/g, '"'))
+            const rev = reviews.filter(elm => {
+                return elm.itemId === goodsItem[0].id
+            })
+            
+            // レビュー評価順リスト
             const reviewsDesc = JSON.parse('<%= JSON.stringify(reviewsDesc) %>'.replace(/&#34;/g, '"'))
+            const revDesc = reviewsDesc.filter(elm => {
+                return elm.itemId === goodsItem[0].id
+            })
+            console.log(revDesc)
             const reviewsAsc = JSON.parse('<%= JSON.stringify(reviewsAsc) %>'.replace(/&#34;/g, '"'))
-            let newList = []
+            const revAsc = reviewsAsc.filter(elm => {
+                return elm.itemId === goodsItem[0].id
+            })
+            // ソート用
+            let sortedRevs = []
 
             // DOMの取得
             const reviewList = document.querySelector('#reviewList')
             const reviewSort = document.querySelector('#reviewSort')
 
-            // レビューの内容一覧
-            reviews.forEach(function (review) {
-                if (reviews.itemId === goodsItem.id) {
-                    reviewList.insertAdjacentHTML('beforeend', `
-                <div class="star">
-                    <img class="star_img" src="/img/re.svg" alt="">
-                    <span>${review.evaluation}</span>
-                </div>
-                <div class="reason">
-                    <span>${review.content}</span>
-                </div>
-                <div class="person">
-                    <p>（<span>${review.userId}</span>）</p>
-                </div>
-                `)
-                }
-            })
+            // レビューの一覧表示
+            function listToDom() {
+                reviewList.innerHTML = '';
+                sortedRevs.forEach(function (value) {
+                        reviewList.insertAdjacentHTML('beforeend', `
+                            <div class="card">
+                                <div class="star">
+                                    <img class="star_img" src="/img/re.svg" alt="">
+                                    <span>${value.evaluation}</span>
+                                </div>
+                                <div class="content">
+                                    <span>${value.content}</span>
+                                </div>
+                                <div class="person">
+                                    <p>（<span>${value.userId}</span>）</p>
+                                </div>
+                            </div>
+                        `)
+                })
+            }
             // レビューソート
             function reviewSortFunc() {
-                newList = []
+                sortedRevs = []
                 if (reviewSort.value === "デフォルト") {
-                    newList = users;
+                    sortedRevs = rev;
                 }
-                if (reviewSort.value === "評価が高い順") {
-                    newList= usersDesc;
+                if (reviewSort.value === "レビューの評価が高い順") {
+                    sortedRevs = revDesc;
                 }
-                if (reviewSort.value === "評価が低い順") {
-                    newList = usersAsc;
+                if (reviewSort.value === "レビューの評価が低い順") {
+                    sortedRevs = revAsc;
                 }
                 listToDom()
             }
 
-            function listToDom() {
-                reviewList.innerHTML = '';
-                newList.forEach(user => {
-                    cards.insertAdjacentHTML('beforeend', `
-                    <div class="card">
-                        <div class="star">
-                            <img class="star_img" src="/img/re.svg" alt="">
-                            <span>${user.rating}</span>
-                        </div>
-                        <div class="reason">
-                            <span>${user.reason}</span>
-                        </div>
-                        <div class="person">
-                            <p>（<span>${user.username}</span>／<span>${user.age}歳</span>）</p>
-                        </div>
-                        <div class="edit">
-                            <a href="/edit/${user.id}">更新</a>
-                        </div>
-                    </div>
-                    `)
-                })
-            }
-            window.addEventListener('load', listToDom)
+            window.addEventListener('load', reviewSortFunc)
+            reviewSort.addEventListener('change', reviewSortFunc)
 
         </script>
     </body>

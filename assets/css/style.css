@@ -66,6 +66,10 @@ a:hover {
 /*-------------------------
   itemList.ejs
 -------------------------*/
+#reviewSort {
+  padding: 0.3rem;
+  margin-bottom: 1rem;
+}
 .itemList_item {
   display: flex;
   flex-wrap: wrap;
@@ -99,4 +103,25 @@ a:hover {
 }
 #addBtn:hover {
   background-color: #6f6;
+}
+
+/*-------------------------
+  レビュー
+-------------------------*/
+.star {
+  display: flex;
+  font-size: 1.2rem;
+}
+.person {
+  font-size: 0.85rem;
+}
+.card {
+  padding: 1rem;
+}
+.card:nth-child(2n-1) {
+  background-color: #eee;
+}
+.star_img {
+  width: 24px;
+  height: 24px;
 }
