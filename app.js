@@ -40,12 +40,6 @@ const goodsPriceAsc = "SELECT * from goods ORDER BY price ASC;";
 // 商品名50音
 const goodsName = "SELECT * from goods ORDER BY name ASC;";
 
-// レビューソート
-// 評価の高い順
-const reviewsDesc = "SELECT * from reviews ORDER BY evaluation DESC;";
-// 評価の低い順
-const reviewsAsc = "SELECT * from reviews ORDER BY evaluation ASC;";
-
 // データ一覧
 const data = goods + reviews + goodsPriceDesc + goodsPriceAsc + goodsName;
 
@@ -68,22 +62,6 @@ app.get("/", (req, res) => {
 });
 
 // 商品ページ
-app.get("/", (req, res) => {
-  const sql = goods + reviews + reviewsDesc + reviewsAsc;
-  con.query(
-    sql,
-    function (err, results, fields) {
-      if (err) throw err;
-      res.render("itemList", {
-        goods: results[0],
-        reviews: results[1],
-        reviewsDesc: results[2],
-        reviewsAsc: results[3]
-      });
-    }
-  );
-});
-
 app.get("/itemList/:id", (req, res) => {
   con.query(
     goods, [req.params.id], function (err, result, fields) {

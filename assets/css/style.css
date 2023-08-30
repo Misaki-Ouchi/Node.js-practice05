@@ -2,6 +2,7 @@
 
 body {
   background-color: #eee;
+  margin: 0;
 }
 h1 {
   margin: 0;
@@ -75,8 +76,14 @@ a:hover {
   width: 100%;
   height: 60vh;
   object-fit: contain;
-  margin-bottom: 1rem;
+}
+.itemList_itemDetails {
+  padding: 1rem;
+  margin: auto;
 }
 #reviews {
+  max-width: 900px;
   background-color: #ddc;
+  padding: 1rem;
+  margin: auto;
 }

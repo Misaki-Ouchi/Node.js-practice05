@@ -17,28 +17,58 @@
                 <p class="itemList_itemPrice itemPrice"><%=goods[0].price.toLocaleString() %>円</p>
             </div>
         </div>
-
         <div id="reviews">
             <!-- レビューソート用セレクトボックス -->
-            <span>並び替え：</span><select>
+            <span>並び替え：</span><select id="reviewSort">
                 <option value="デフォルト">デフォルト</option>
-                <option value="レビューの評価値高い順">レビューの評価値高い順</option>
-                <option value="レビューの評価値低い順">レビューの評価値低い順</option>
+                <option value="レビューの評価が高い順">レビューの評価が高い順</option>
+                <option value="レビューの評価が低い順">レビューの評価が低い順</option>
             </select>
             <!-- レビューの内容一覧 -->
             <div id="reviewList">
             </div>
             <!-- 買い物カゴへ入れるボタン -->
         </div>
-        
         <script>
+            // データの取得
+            const goods = JSON.parse('<%= JSON.stringify(goods) %>'.replace(/&#34;/g, '"'))
+            let newList = []
+
+            // DOMの取得
             const reviewList = document.querySelector('#reviewList')
+            const reviewSort = document.querySelector('#reviewSort')
+
             // レビューの内容一覧
             reviews.forEach(function (review) {
                 if (review.itemId === goods[0].id) {
-
+                    reviewList.insertAdjacentElement('beforeend', `
+                <div class="star">
+                    <img class="star_img" src="/img/re.svg" alt="">
+                    <span>${review.evaluation}</span>
+                </div>
+                <div class="reason">
+                    <span>${review.content}</span>
+                </div>
+                <div class="person">
+                    <p>（<span>${review.userId}</span>）</p>
+                </div>
+                `)
                 }
             })
+            // レビューソート
+            function reviewSortFunc() {
+                newList = []
+                if (reviewSort.value === "デフォルト") {
+                    newList = users;
+                }
+                if (reviewSort.value === "評価が高い順") {
+                    newList= usersDesc;
+                }
+                if (reviewSort.value === "評価が低い順") {
+                    newList = usersAsc;
+                }
+                listToDom()
+            }
 
             function listToDom() {
                 reviewList.innerHTML = '';
@@ -62,6 +92,7 @@
                     `)
                 })
             }
+            window.addEventListener('load', listToDom)
 
         </script>
     </body>
