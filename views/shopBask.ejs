@@ -9,7 +9,7 @@
         <h1>買い物かご</h1>
 
         <div id="items">
-            <% bagItem.forEach( function(item) { %>
+            <% bagItems.forEach( function(item) { %>
             <div class="item">
                 <!-- 商品画像 -->
                 <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
@@ -29,6 +29,9 @@
         <p id="total"></p>
 
         <script>
+            // データ取得
+            const goods = JSON.parse('<%= JSON.stringify(goods) %>'.replace(/&#34;/g, '"'))
+            const bagItems = JSON.parse('<%= JSON.stringify(bagItems) %>'.replace(/&#34;/g, '"'))
 
         </script>
     </body>

@@ -68,11 +68,9 @@ app.get("/", (req, res) => {
 
 // 商品ページ
 app.get("/itemList/:id", (req, res) => {
-  const goodsItem = `SELECT * FROM goods WHERE id = ${req.params.id};`;
+  const goodsItem = `SELECT * from goods WHERE id = ${req.params.id};`;
   const sql = goodsItem + reviews + reviewsDesc + reviewsAsc;
-  con.query(
-    sql,
-    function (err, results, fields) {
+  con.query(sql, function (err, results, fields) {
     if (err) throw err;
     res.render("itemList", {
       goodsItem: results[0],
@@ -83,31 +81,31 @@ app.get("/itemList/:id", (req, res) => {
   });
 });
 
-// 買い物カゴ
+// 買い物カゴへ追加
 app.post("", (req, res) => {
   console.log(req.params.id);
+  // const sql = `INSERT INTO bag(id, itemId, num) VALUES AS NEW(0, ?, ?)
+  // ON DUPLICATE KEY UPDATE num += NEW.num`;
   con.query(
     "INSERT INTO bag(id, itemId, num) VALUES (0, ?, ?)",
-    [
-      req.body.id,
-      req.body.num
-    ],
+    [req.body.id, req.body.num],
     function (err, result, fields) {
       if (err) throw err;
       console.log(result);
       res.send("買い物かごに追加されました");
     }
-    );
+  );
 });
-
-// app.get("/shopBask/:id", (req, res) => {
-//   const goodsItem = `SELECT * FROM goods WHERE id = ${req.params.id};`;
-//   con.query(goodsItem, function (err, result, fields) {
-//     if (err) throw err;
-//     res.render("shopBask", {
-//       goodsItem: result,
-//     });
-//   });
-// });
+// 買い物カゴ
+app.get("/shopBask", (req, res) => {
+  const sql = goods + bag;
+  con.query(sql, function (err, results, fields) {
+    if (err) throw err;
+    res.render("shopBask", {
+      goods: results[0],
+      bagItems: results[1],
+    });
+  });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

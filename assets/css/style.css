@@ -102,17 +102,19 @@ a:hover {
   text-align: center;
 }
 #addBtn {
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+#addBtn a {
   cursor: pointer;
   background-color: #afa;
   font-size: 0.9rem;
   border: 1.5px solid #333;
   border-radius: 3px;
   padding: 0.3rem 0.5rem;
-  margin: auto;
-  margin-bottom: 2rem;
   transition: 0.1s;
 }
-#addBtn:hover {
+#addBtn a:hover {
   background-color: #6f6;
 }
 input[type="number"] {
