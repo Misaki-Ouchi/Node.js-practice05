@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
   // 商品価格低い順
   const goodsPriceAsc = "SELECT * from goods ORDER BY price ASC;";
   // 商品名50音
-  const goodsName = "SELECT * from goods ORDER BY name;";
+  const goodsName = "SELECT * from goods ORDER BY name ASC;";
 
   con.query(
     goods + reviews + goodsPriceDesc + goodsPriceAsc + goodsName,
@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
         reviews: results[1],
         goodsPriceDesc: results[2],
         goodsPriceAsc: results[3],
-        goodsName: results[4]
+        goodsName: results[4],
       });
     }
   );
