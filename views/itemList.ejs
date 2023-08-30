@@ -3,20 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= goods[0].name %></title>
+        <title><%= goodsItem[0].name %></title>
         <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
         <div class="itemList_item">
             <!-- 商品画像 -->
-            <img class="itemList_itemImg itemImg" src="/img/item<%=goods[0].id %>.jpg" alt="<%=goods[0].name %>">
+            <img class="itemList_itemImg itemImg" src="/img/item<%=goodsItem[0].id %>.jpg" alt="<%=goodsItem[0].name %>">
             <div class="itemList_itemDetails">
                 <!-- 商品名 -->
-                <p><%= goods[0].name %></p>
+                <p><%= goodsItem[0].name %></p>
                 <!-- 商品価格 -->
-                <p class="itemList_itemPrice itemPrice"><%=goods[0].price.toLocaleString() %>円</p>
+                <p class="itemList_itemPrice itemPrice"><%=goodsItem[0].price.toLocaleString() %>円</p>
             </div>
         </div>
+        <!-- 買い物カゴへ入れるボタン -->
+        <button id="addBtn">買い物かごへ追加</button>
         <div id="reviews">
             <!-- レビューソート用セレクトボックス -->
             <span>並び替え：</span><select id="reviewSort">
@@ -27,11 +29,13 @@
             <!-- レビューの内容一覧 -->
             <div id="reviewList">
             </div>
-            <!-- 買い物カゴへ入れるボタン -->
         </div>
         <script>
             // データの取得
-            const goods = JSON.parse('<%= JSON.stringify(goods) %>'.replace(/&#34;/g, '"'))
+            const goodsItem = JSON.parse('<%= JSON.stringify(goodsItem) %>'.replace(/&#34;/g, '"'))
+            const reviews = JSON.parse('<%= JSON.stringify(reviews) %>'.replace(/&#34;/g, '"'))
+            const reviewsDesc = JSON.parse('<%= JSON.stringify(reviewsDesc) %>'.replace(/&#34;/g, '"'))
+            const reviewsAsc = JSON.parse('<%= JSON.stringify(reviewsAsc) %>'.replace(/&#34;/g, '"'))
             let newList = []
 
             // DOMの取得
@@ -40,8 +44,8 @@
 
             // レビューの内容一覧
             reviews.forEach(function (review) {
-                if (review.itemId === goods[0].id) {
-                    reviewList.insertAdjacentElement('beforeend', `
+                if (reviews.itemId === goodsItem.id) {
+                    reviewList.insertAdjacentHTML('beforeend', `
                 <div class="star">
                     <img class="star_img" src="/img/re.svg" alt="">
                     <span>${review.evaluation}</span>

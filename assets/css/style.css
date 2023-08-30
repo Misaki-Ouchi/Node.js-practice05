@@ -70,7 +70,6 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 2rem;
 }
 .itemList_itemImg {
   width: 100%;
@@ -86,4 +85,18 @@ a:hover {
   background-color: #ddc;
   padding: 1rem;
   margin: auto;
+}
+#addBtn {
+  cursor: pointer;
+  display: block;
+  background-color: #afa;
+  padding: 0.3rem 0.5rem;
+  border: 1.5px solid #333;
+  border-radius: 3px;
+  margin: auto;
+  margin-bottom: 2rem;
+  transition: 0.3s;
+}
+#addBtn:hover {
+  background-color: #6f6;
 }
