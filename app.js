@@ -30,7 +30,6 @@ app.get("/", (req, res) => {
   // デフォルト
   const goods = "SELECT * from goods;";
   const reviews = "SELECT * from reviews;";
-
   // ソート
   // 商品価格高い順
   const goodsPriceDesc = "SELECT * from goods ORDER BY price DESC;";

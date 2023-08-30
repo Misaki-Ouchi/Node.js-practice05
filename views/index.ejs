@@ -31,7 +31,7 @@
             const goodsPriceAsc = JSON.parse('<%= JSON.stringify(goodsPriceAsc) %>'.replace(/&#34;/g, '"'))
             // 商品名50音
             const goodsName = JSON.parse('<%= JSON.stringify(goodsName) %>'.replace(/&#34;/g, '"'))
-            
+
             // DOM取得
             const items = document.querySelector('#items')
             const sortSelect = document.querySelector('#sortSelect')
@@ -64,26 +64,26 @@
                     }
                     // DOMに表示
                     items.insertAdjacentHTML('beforeend', `
-                    <a href="/itemList:id">
                     <div class="item">
-                        <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
-                        <div class="itemDetails">
-                            <div>
-                                <!-- 商品名 -->
-                                <p>${item.name}</p>
+                        <a href="/itemList/${item.id}">
+                            <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
+                            <div class="itemDetails">
+                                <div>
+                                    <!-- 商品名 -->
+                                    <p>${item.name}</p>
+                                </div>
+                                <div>
+                                    <!-- 商品価格 -->
+                                    <p class="itemPrice">${item.price.toLocaleString()}円</p>
+                                    <!-- レビューの平均値(レビュー数) -->
+                                    <p class="review">
+                                        レビュー平均：<img class="reviewStar" src="/img/re.svg" alt="星"><span class="reviewAve">${aveR}</span>
+                                        (<span class="reviewTotal">${len}</span>)
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <!-- 商品価格 -->
-                                <p class="itemPrice">${item.price.toLocaleString()}円</p>
-                                <!-- レビューの平均値(レビュー数) -->
-                                <p class="review">
-                                    レビュー平均：<img class="reviewStar" src="/img/re.svg" alt="星"><span class="reviewAve">${aveR}</span>
-                                    (<span class="reviewTotal">${len}</span>)
-                                </p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                    </a>
                     `)
                 })
             }

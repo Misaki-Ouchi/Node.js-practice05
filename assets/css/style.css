@@ -10,6 +10,14 @@ p {
   margin: 0;
   margin-bottom: 0.5rem;
 }
+a {
+  text-decoration: none;
+  color: #000;
+  transition: 0.3s;
+}
+a:hover {
+  opacity: 0.8;
+}
 
 .container {
   max-width: 900px;
