@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>買い物かご</title>
+    </head>
+    <body>
+        <h1>買い物かご</h1>
+
+        <div id="items">
+            <% bagItem.forEach( function(item) { %>
+            <div class="item">
+                <!-- 商品画像 -->
+                <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
+                <div class="itemDetails">
+                    <!-- 商品名 -->
+                    <p>${item.name}</p>
+                    <!-- 商品価格 -->
+                    <p class="itemPrice">${item.price.toLocaleString()}円</p>
+                </div>
+                <!-- 削除ボタン -->
+                <a href="/delete/item.id">削除</a>
+            </div>
+            <% }) %>
+        </div>
+
+        <!-- 全商品の合計金額 -->
+        <p id="total"></p>
+
+        <script>
+
+        </script>
+    </body>
+</html>

@@ -28,8 +28,12 @@ app.use(express.static("assets"));
 // データ取得
 
 // デフォルト
+// 商品
 const goods = "SELECT * from goods;";
+// レビュー
 const reviews = "SELECT * from reviews;";
+// 買い物カゴ
+const bag = "SELECT * from bag;";
 
 // 商品ソート
 // 商品価格高い順
@@ -63,16 +67,6 @@ app.get("/", (req, res) => {
 });
 
 // 商品ページ
-// app.get("/itemList/:id", (req, res) => {
-//   const sql = "SELECT * FROM goods WHERE id = ?";
-//   con.query(sql, [req.params.id], function (err, result, fields) {
-//     if (err) throw err;
-//     res.render("itemList", {
-//       goods: result,
-//     });
-//   });
-// });
-
 app.get("/itemList/:id", (req, res) => {
   const goodsItem = `SELECT * FROM goods WHERE id = ${req.params.id};`;
   const sql = goodsItem + reviews + reviewsDesc + reviewsAsc;
@@ -88,5 +82,32 @@ app.get("/itemList/:id", (req, res) => {
     });
   });
 });
+
+// 買い物カゴ
+app.post("", (req, res) => {
+  console.log(req.params.id);
+  con.query(
+    "INSERT INTO bag(id, itemId, num) VALUES (0, ?, ?)",
+    [
+      req.body.id,
+      req.body.num
+    ],
+    function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
+      res.send("買い物かごに追加されました");
+    }
+    );
+});
+
+// app.get("/shopBask/:id", (req, res) => {
+//   const goodsItem = `SELECT * FROM goods WHERE id = ${req.params.id};`;
+//   con.query(goodsItem, function (err, result, fields) {
+//     if (err) throw err;
+//     res.render("shopBask", {
+//       goodsItem: result,
+//     });
+//   });
+// });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

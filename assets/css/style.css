@@ -84,25 +84,40 @@ a:hover {
   padding: 1rem;
   margin: auto;
 }
+.itemList_itemName {
+  font-size: 1.5rem;
+}
 #reviews {
   max-width: 900px;
   background-color: #ddc;
   padding: 1rem;
   margin: auto;
 }
+.reviewTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.shopBtn {
+  text-align: center;
+}
 #addBtn {
   cursor: pointer;
-  display: block;
   background-color: #afa;
-  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
   border: 1.5px solid #333;
   border-radius: 3px;
+  padding: 0.3rem 0.5rem;
   margin: auto;
   margin-bottom: 2rem;
-  transition: 0.3s;
+  transition: 0.1s;
 }
 #addBtn:hover {
   background-color: #6f6;
+}
+input[type="number"] {
+  width: 2.2rem;
+  height: 1.6rem;
 }
 
 /*-------------------------

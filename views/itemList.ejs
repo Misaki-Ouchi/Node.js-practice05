@@ -7,19 +7,29 @@
         <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
-        <div class="itemList_item">
-            <!-- 商品画像 -->
-            <img class="itemList_itemImg itemImg" src="/img/item<%=goodsItem[0].id %>.jpg" alt="<%=goodsItem[0].name %>">
-            <div class="itemList_itemDetails">
-                <!-- 商品名 -->
-                <p><%= goodsItem[0].name %></p>
-                <!-- 商品価格 -->
-                <p class="itemList_itemPrice itemPrice"><%=goodsItem[0].price.toLocaleString() %>円</p>
+        <form action="/" method="post">
+            <div class="itemList_item">
+                <!-- 商品画像 -->
+                <img class="itemList_itemImg itemImg" src="/img/item<%=goodsItem[0].id %>.jpg" alt="<%=goodsItem[0].name %>">
+                <div class="itemList_itemDetails">
+                    <!-- 商品名 -->
+                    <p class="itemList_itemName"><%= goodsItem[0].name %></p>
+                    <!-- 商品価格 -->
+                    <p class="itemList_itemPrice itemPrice"><%=goodsItem[0].price.toLocaleString() %>円</p>
+                </div>
             </div>
-        </div>
-        <!-- 買い物カゴへ入れるボタン -->
-        <button id="addBtn">買い物かごへ追加</button>
+            <!-- 商品id取得 -->
+            <input style="display: none;" type="text" name="id" value="<%= goodsItem[0].id %>">
+            <div class="shopBtn">
+                <!-- 個数 -->
+                <input type="number" min="1" step="1" name="num" value="1">
+                <!-- 買い物カゴへ入れるボタン -->
+                <button id="addBtn">買い物かごへ追加</button>
+            </div>
+        </form>
+
         <div id="reviews">
+            <p class="reviewTitle">レビュー</p>
             <!-- レビューソート用セレクトボックス -->
             <span>並び替え：</span><select id="reviewSort">
                 <option value="デフォルト">デフォルト</option>
@@ -30,6 +40,7 @@
             <div id="reviewList">
             </div>
         </div>
+
         <script>
             // データの取得
             const goodsItem = JSON.parse('<%= JSON.stringify(goodsItem) %>'.replace(/&#34;/g, '"'))
@@ -37,13 +48,12 @@
             const rev = reviews.filter(elm => {
                 return elm.itemId === goodsItem[0].id
             })
-            
+
             // レビュー評価順リスト
             const reviewsDesc = JSON.parse('<%= JSON.stringify(reviewsDesc) %>'.replace(/&#34;/g, '"'))
             const revDesc = reviewsDesc.filter(elm => {
                 return elm.itemId === goodsItem[0].id
             })
-            console.log(revDesc)
             const reviewsAsc = JSON.parse('<%= JSON.stringify(reviewsAsc) %>'.replace(/&#34;/g, '"'))
             const revAsc = reviewsAsc.filter(elm => {
                 return elm.itemId === goodsItem[0].id
@@ -59,7 +69,7 @@
             function listToDom() {
                 reviewList.innerHTML = '';
                 sortedRevs.forEach(function (value) {
-                        reviewList.insertAdjacentHTML('beforeend', `
+                    reviewList.insertAdjacentHTML('beforeend', `
                             <div class="card">
                                 <div class="star">
                                     <img class="star_img" src="/img/re.svg" alt="">
