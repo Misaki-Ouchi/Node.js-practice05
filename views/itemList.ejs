@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品一覧</title>
-</head>
-<body>
-    <h1><%= goods[0].name %></h1>
-    
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%= goods[0].name %></title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <div class="itemList_item">
+            <!-- 商品画像 -->
+            <img class="itemList_itemImg itemImg" src="/img/item<%=goods[0].id %>.jpg" alt="<%=goods[0].name %>">
+            <div class="itemList_itemDetails">
+                <!-- 商品名 -->
+                <p><%= goods[0].name %></p>
+                <!-- 商品価格 -->
+                <p class="itemList_itemPrice itemPrice"><%=goods[0].price.toLocaleString() %>円</p>
+            </div>
+        </div>
+
+        <div id="reviews">
+            <!-- レビューソート用セレクトボックス -->
+            <span>並び替え：</span><select>
+                <option value="デフォルト">デフォルト</option>
+                <option value="レビューの評価値高い順">レビューの評価値高い順</option>
+                <option value="レビューの評価値低い順">レビューの評価値低い順</option>
+            </select>
+            <!-- レビューの内容一覧 -->
+            <div id="reviewList">
+            </div>
+            <!-- 買い物カゴへ入れるボタン -->
+        </div>
+        
+        <script>
+            const reviewList = document.querySelector('#reviewList')
+            // レビューの内容一覧
+            reviews.forEach(function (review) {
+                if (review.itemId === goods[0].id) {
+
+                }
+            })
+
+            function listToDom() {
+                reviewList.innerHTML = '';
+                newList.forEach(user => {
+                    cards.insertAdjacentHTML('beforeend', `
+                    <div class="card">
+                        <div class="star">
+                            <img class="star_img" src="/img/re.svg" alt="">
+                            <span>${user.rating}</span>
+                        </div>
+                        <div class="reason">
+                            <span>${user.reason}</span>
+                        </div>
+                        <div class="person">
+                            <p>（<span>${user.username}</span>／<span>${user.age}歳</span>）</p>
+                        </div>
+                        <div class="edit">
+                            <a href="/edit/${user.id}">更新</a>
+                        </div>
+                    </div>
+                    `)
+                })
+            }
+
+        </script>
+    </body>
 </html>

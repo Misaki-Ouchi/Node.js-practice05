@@ -25,21 +25,35 @@ const con = mysql.createConnection({
 // cssファイルの取得
 app.use(express.static("assets"));
 
-// データ取得
-app.get("/", (req, res) => {
-  // デフォルト
-  const goods = "SELECT * from goods;";
-  const reviews = "SELECT * from reviews;";
-  // ソート
-  // 商品価格高い順
-  const goodsPriceDesc = "SELECT * from goods ORDER BY price DESC;";
-  // 商品価格低い順
-  const goodsPriceAsc = "SELECT * from goods ORDER BY price ASC;";
-  // 商品名50音
-  const goodsName = "SELECT * from goods ORDER BY name ASC;";
 
+// データ取得
+
+// デフォルト
+const goods = "SELECT * from goods;";
+const reviews = "SELECT * from reviews;";
+
+// 商品ソート
+// 商品価格高い順
+const goodsPriceDesc = "SELECT * from goods ORDER BY price DESC;";
+// 商品価格低い順
+const goodsPriceAsc = "SELECT * from goods ORDER BY price ASC;";
+// 商品名50音
+const goodsName = "SELECT * from goods ORDER BY name ASC;";
+
+// レビューソート
+// 評価の高い順
+const reviewsDesc = "SELECT * from reviews ORDER BY evaluation DESC;";
+// 評価の低い順
+const reviewsAsc = "SELECT * from reviews ORDER BY evaluation ASC;";
+
+// データ一覧
+const data = goods + reviews + goodsPriceDesc + goodsPriceAsc + goodsName;
+
+
+// ホームページ
+app.get("/", (req, res) => {
   con.query(
-    goods + reviews + goodsPriceDesc + goodsPriceAsc + goodsName,
+    data,
     function (err, results, fields) {
       if (err) throw err;
       res.render("index", {
@@ -54,9 +68,25 @@ app.get("/", (req, res) => {
 });
 
 // 商品ページ
+app.get("/", (req, res) => {
+  const sql = goods + reviews + reviewsDesc + reviewsAsc;
+  con.query(
+    sql,
+    function (err, results, fields) {
+      if (err) throw err;
+      res.render("itemList", {
+        goods: results[0],
+        reviews: results[1],
+        reviewsDesc: results[2],
+        reviewsAsc: results[3]
+      });
+    }
+  );
+});
+
 app.get("/itemList/:id", (req, res) => {
-  const sql = "SELECT * FROM goods WHERE id = ?";
-  con.query(sql, [req.params.id], function (err, result, fields) {
+  con.query(
+    goods, [req.params.id], function (err, result, fields) {
     if (err) throw err;
     res.render("itemList", {
       goods: result,
