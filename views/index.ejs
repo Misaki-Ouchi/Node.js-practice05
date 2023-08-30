@@ -31,15 +31,19 @@
             const goodsPriceAsc = JSON.parse('<%= JSON.stringify(goodsPriceAsc) %>'.replace(/&#34;/g, '"'))
             // 商品名50音
             const goodsName = JSON.parse('<%= JSON.stringify(goodsName) %>'.replace(/&#34;/g, '"'))
-            let newList = [];
-
+            
             // DOM取得
             const items = document.querySelector('#items')
             const sortSelect = document.querySelector('#sortSelect')
 
+            // ソート用リスト
+            let newList = []
+            let aveSort = []
+            let totalSort = []
+
             // DOM(#itemsの中)に表示
             function listToDom() {
-                items.innerHTML =''
+                items.innerHTML = ''
                 newList.forEach(item => {
                     // レビュー平均・数
                     let itemCount = []
@@ -53,12 +57,14 @@
                     for (let i = 0; i < len; i++) {
                         sum += itemCount[i];
                     }
-                    let ave = (Math.round(sum / len * 10)) / 10
+                    let ave = sum / len
+                    let aveR = (Math.round(ave * 10)) / 10
                     if (sum === 0) {
-                        ave = 0
+                        aveR = 0
                     }
                     // DOMに表示
                     items.insertAdjacentHTML('beforeend', `
+                    <a href="/itemList:id">
                     <div class="item">
                         <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
                         <div class="itemDetails">
@@ -71,16 +77,18 @@
                                 <p class="itemPrice">${item.price.toLocaleString()}円</p>
                                 <!-- レビューの平均値(レビュー数) -->
                                 <p class="review">
-                                    レビュー平均：<img class="reviewStar" src="/img/re.svg" alt="星"><span class="reviewAve">${ave}</span>
+                                    レビュー平均：<img class="reviewStar" src="/img/re.svg" alt="星"><span class="reviewAve">${aveR}</span>
                                     (<span class="reviewTotal">${len}</span>)
                                 </p>
                             </div>
                         </div>
                     </div>
+                    </a>
                     `)
                 })
             }
             window.addEventListener('load', sortFunc)
+            window.addEventListener('load', getReview)
             sortSelect.addEventListener('change', sortFunc)
 
             // ソート機能
@@ -99,19 +107,15 @@
                 if (sortSelect.value === '商品名50音') {
                     newList = goodsName
                 }
-                let aveSort = []
-                let totalSort = []
-                reviewSort()
                 if (sortSelect.value === 'レビューの評価順') {
-                    newList = aveSort
+                    newList = goods.slice().sort((a, b) => b.revAve - a.revAve)
                 }
                 if (sortSelect.value === 'レビューの多い順') {
-                    newList = totalSort
+                    newList = goods.slice().sort((a, b) => b.revTotal - a.revTotal)
                 }
                 listToDom()
-
             }
-            function reviewSort() {
+            function getReview() {
                 // レビュー評価平均・合計値を取得
                 const reviewAve = document.querySelectorAll('.reviewAve')
                 const reviewTotal = document.querySelectorAll('.reviewTotal')
@@ -119,10 +123,6 @@
                     goods[i].revAve = reviewAve[i].innerHTML
                     goods[i].revTotal = reviewTotal[i].innerHTML
                 }
-                // レビューの評価順
-                let aveSort = goods.sort((a,b) => a.revAve - b.revAve)
-                // レビューの多い順
-                let totalSort = goods.sort((a,b) => a.revTotal - b.revTotal)
             }
         </script>
     </body>

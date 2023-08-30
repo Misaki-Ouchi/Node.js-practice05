@@ -54,4 +54,15 @@ app.get("/", (req, res) => {
   );
 });
 
+// 商品ページ
+app.get("/itemList/:id", (req, res) => {
+  const sql = "SELECT * FROM goods WHERE id = ?";
+  con.query(sql, [req.params.id], function (err, result, fields) {
+    if (err) throw err;
+    res.render("itemList", {
+      goods: result,
+    });
+  });
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
