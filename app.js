@@ -85,8 +85,6 @@ app.get("/itemList/:id", (req, res) => {
 app.post("", (req, res) => {
   console.log(req.params.id);
   const sql = "INSERT INTO bag(id, itemId, num) VALUES (0, ?, 1)";
-  // const sql = `INSERT INTO bag (id, itemId, num) VALUES (0, ?, 1)
-  // ON DUPLICATE KEY UPDATE num += 1`;
   con.query(
     sql,
     [req.body.id, req.body.num],
