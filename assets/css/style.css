@@ -86,10 +86,13 @@ a:hover {
   padding: 1rem;
 }
 #shopBask .item:nth-child(2n-1) {
-  background-color: #ddd;
+  background-color: #ded;
 }
 #shopBask .itemImg {
   width: 200px;
+  height: 200px;
+  object-fit: contain;
+  background: #ddd;
 }
 #shopBask .totalP {
   text-align: right;
