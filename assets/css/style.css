@@ -2,6 +2,7 @@
 
 body {
   background-color: #eee;
+  padding: 1rem;
   margin: 0;
 }
 h1 {
@@ -24,24 +25,25 @@ a:hover {
   max-width: 900px;
   margin: auto;
 }
-#items {
+#index #items {
   display: flex;
   flex-wrap: wrap;
   column-gap: 2rem;
   row-gap: 4rem;
   width: 100%;
   margin: auto;
+  margin-top: 2rem;
 }
-.item {
+#index .item {
   width: 200px;
 }
-.itemImg {
+#index .itemImg {
   width: 100%;
   height: 200px;
   object-fit: contain;
   background: #ddd;
 }
-.itemDetails {
+#index .itemDetails {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -61,6 +63,42 @@ a:hover {
 .reviewAve {
   font-size: 0.9rem;
   font-weight: bold;
+}
+.toLink {
+  text-decoration: underline;
+  text-underline-offset: 0.1rem;
+  margin-left: 1rem;
+}
+/*-------------------------
+  shopBask.els
+-------------------------*/
+#shopBask {
+ max-width: 900px;
+ margin: auto;
+}
+#shopBask #items {
+  display: block;
+  margin-top: 2rem;
+}
+#shopBask .item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+#shopBask .item:nth-child(2n-1) {
+  background-color: #ddd;
+}
+#shopBask .itemImg {
+  width: 200px;
+}
+#shopBask .totalP {
+  text-align: right;
+  padding: 1rem;
+}
+#shopBask #total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-right: 0.3rem;
 }
 
 /*-------------------------
@@ -102,19 +140,16 @@ a:hover {
   text-align: center;
 }
 #addBtn {
-  display: inline-block;
-  margin-bottom: 2rem;
-}
-#addBtn a {
   cursor: pointer;
   background-color: #afa;
   font-size: 0.9rem;
   border: 1.5px solid #333;
   border-radius: 3px;
   padding: 0.3rem 0.5rem;
+  margin-bottom: 2rem;
   transition: 0.1s;
 }
-#addBtn a:hover {
+#addBtn:hover {
   background-color: #6f6;
 }
 input[type="number"] {

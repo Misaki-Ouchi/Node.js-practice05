@@ -4,34 +4,56 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>買い物かご</title>
+        <link rel="stylesheet" href="/css/style.css">
     </head>
-    <body>
+    <body id="shopBask">
         <h1>買い物かご</h1>
-
+        <a class="toLink" href="/">商品一覧へ戻る</a>
         <div id="items">
-            <% bagItems.forEach( function(item) { %>
-            <div class="item">
-                <!-- 商品画像 -->
-                <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
-                <div class="itemDetails">
-                    <!-- 商品名 -->
-                    <p>${item.name}</p>
-                    <!-- 商品価格 -->
-                    <p class="itemPrice">${item.price.toLocaleString()}円</p>
-                </div>
-                <!-- 削除ボタン -->
-                <a href="/delete/item.id">削除</a>
-            </div>
-            <% }) %>
         </div>
-
         <!-- 全商品の合計金額 -->
-        <p id="total"></p>
-
+        <p class="totalP">合計金額：<span id="total"></span>円</p>
         <script>
             // データ取得
             const goods = JSON.parse('<%= JSON.stringify(goods) %>'.replace(/&#34;/g, '"'))
             const bagItems = JSON.parse('<%= JSON.stringify(bagItems) %>'.replace(/&#34;/g, '"'))
+            // let a = bagItems[0].itemId
+
+            // DOM取得
+            const items = document.querySelector('#items');
+            const total = document.querySelector('#total');
+
+            function listToDom() {
+                let prices = []
+                bagItems.forEach(value => {
+                    let id = value.itemId - 1
+                    let item = goods[id]
+                    prices.push(item.price)
+                    items.insertAdjacentHTML('beforeend', `
+                <div class="item">
+                    <!-- 商品画像 -->
+                    <img class="itemImg" src="/img/item${item.id}.jpg" alt="${item.name}">
+                    <div class="itemDetails">
+                        <!-- 商品名 -->
+                        <p>${item.name}</p>
+                        <!-- 商品価格 -->
+                        <p class="itemPrice">${item.price.toLocaleString()}円</p>
+                        <!-- 削除ボタン -->
+                        <a href="/delete/${value.id}">削除</a>
+                    </div>
+                </div>
+                `)
+                })
+                let sum = 0
+                prices.forEach(price =>
+                    sum += price
+                )
+                total.innerHTML = sum.toLocaleString()
+                if(items.innerText === "") {
+                    items.innerText = "買い物かごに商品はありません"
+                }
+            }
+            window.addEventListener('load', listToDom)
 
         </script>
     </body>

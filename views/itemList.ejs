@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
-        <form action="" method="post">
+        <form action="/" method="post">
             <div class="itemList_item">
                 <!-- 商品画像 -->
                 <img class="itemList_itemImg itemImg" src="/img/item<%=goodsItem[0].id %>.jpg" alt="<%=goodsItem[0].name %>">
@@ -22,9 +22,10 @@
             <input style="display: none;" type="text" name="id" value="<%= goodsItem[0].id %>">
             <div class="shopBtn">
                 <!-- 個数 -->
-                <input type="number" min="1" step="1" name="num" value="1">
+                <!-- <input type="number" min="1" step="1" name="num" value="1"> -->
                 <!-- 買い物カゴへ入れるボタン -->
-                <p id="addBtn"><a href="/shopBask">買い物かごへ追加</a></p>
+                <button id="addBtn">買い物かごへ追加</button>
+                <a class="toShopBask" href="/shopBask">買い物かごへ移動</a>
             </div>
         </form>
 

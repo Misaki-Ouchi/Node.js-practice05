@@ -84,15 +84,15 @@ app.get("/itemList/:id", (req, res) => {
 // 買い物カゴへ追加
 app.post("", (req, res) => {
   console.log(req.params.id);
-  // const sql = `INSERT INTO bag(id, itemId, num) VALUES AS NEW(0, ?, ?)
-  // ON DUPLICATE KEY UPDATE num += NEW.num`;
+  const sql = "INSERT INTO bag(id, itemId, num) VALUES (0, ?, 1)";
+  // const sql = `INSERT INTO bag (id, itemId, num) VALUES (0, ?, 1)
+  // ON DUPLICATE KEY UPDATE num += 1`;
   con.query(
-    "INSERT INTO bag(id, itemId, num) VALUES (0, ?, ?)",
+    sql,
     [req.body.id, req.body.num],
     function (err, result, fields) {
       if (err) throw err;
-      console.log(result);
-      res.send("買い物かごに追加されました");
+      res.redirect("/shopBask");
     }
   );
 });
@@ -105,6 +105,15 @@ app.get("/shopBask", (req, res) => {
       goods: results[0],
       bagItems: results[1],
     });
+  });
+});
+// bagのアイテム削除
+app.get("/delete/:id", (req, res) => {
+  const sql = "DELETE FROM bag WHERE id = ?";
+  con.query(sql, [req.params.id], function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    res.redirect("/shopBask");
   });
 });
 
